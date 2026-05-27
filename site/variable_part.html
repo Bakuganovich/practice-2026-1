@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Тайп-марафон | Игра для тренировки скорости печати</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            color: #1e293b;
+            background-color: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* HEADER */
+        .header {
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+
+        .logo a {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #0f172a;
+        }
+
+        .logo span {
+            color: #f59e0b;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #334155;
+            transition: 0.3s;
+        }
+
+        .nav-menu li a:hover, .nav-menu li a.active {
+            color: #f59e0b;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background: #0f172a;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                padding: 2rem 0;
+                gap: 1.5rem;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 60px 24px;
+            background: linear-gradient(135deg, #fef9e6 0%, #ffffff 100%);
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: #f59e0b;
+        }
+
+        .hero-image {
+            flex: 1;
+        }
+        .hero-image img {
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+
+        /* Контейнер для основного контента (как report-container) */
+        .content-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            padding: 40px 48px;
+        }
+        .content-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #0f172a;
+            border-left: 5px solid #f59e0b;
+            padding-left: 20px;
+        }
+        .content-container h2 {
+            font-size: 1.5rem;
+            margin: 32px 0 16px 0;
+            color: #1e293b;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+        .content-container h3 {
+            margin: 24px 0 12px;
+            font-size: 1.2rem;
+        }
+        .content-container p {
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .content-container ul, .content-container ol {
+            margin: 16px 0 16px 24px;
+        }
+        .content-container li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .content-container hr {
+            margin: 24px 0;
+            border: none;
+            height: 1px;
+            background: #e2e8f0;
+        }
+        .content-container code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .content-container pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 16px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .content-container pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        .content-container strong {
+            color: #0f172a;
+        }
+        .screenshot-gallery {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .screenshot-gallery figure {
+            flex: 1;
+            min-width: 200px;
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+        }
+        .screenshot-gallery img {
+            width: 100%;
+            border-radius: 12px;
+            background: #e2e8f0;
+            min-height: 150px;
+            object-fit: cover;
+        }
+        .level-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .level-table th, .level-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        .level-table th {
+            background: #f8fafc;
+            font-weight: 600;
+        }
+        .keys {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .key {
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-family: monospace;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 24px;
+                margin: 20px;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        .footer-logo h3 {
+            color: white;
+        }
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: #f59e0b;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+        }
+    </style>
+</head>
+<body>
+	<header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">Фин<span>атлон</span></a>
+            </div>
+            <nav class="nav">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="about.html">О проекте</a></li>
+                    <li><a href="team.html">Участники</a></li>
+                    <li><a href="journal.html">Журнал</a></li>
+                    <li><a href="resources.html">Ресурсы</a></li>
+					<li><a href="report_intraction_with%20partners.html">Партнеры</a></li>
+					<li><a href="variable_part.html" class="active">Вариативная часть</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>⌨️ <span>Тайп-марафон</span><br>Игра для тренировки скорости печати</h1>
+            <p>Проверь свою скорость набора текста на русском языке. Три уровня сложности, таймер, подсчёт WPM и точности.</p>
+            <a href="#install" class="btn-primary">Начать игру <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="hero-image">
+            <img src="photos/middle_screen.png" alt="Демонстрация игры">
+        </div>
+    </section>
+
+    <main>
+        <div class="content-container" id="about">
+            <h1>📖 О проекте</h1>
+            <p><strong>Тайп-марафон</strong> — это обучающая игра, разработанная на Python с использованием библиотеки Pygame. Игроку предлагается печатать появляющиеся слова на экране до истечения таймера. Чем быстрее и точнее ввод, тем выше результат.</p>
+            
+            <h2>🎯 Основные возможности</h2>
+            <ul>
+                <li>🟢 Три уровня сложности (с разными словарями)</li>
+                <li>⏱ Обратный таймер с визуальным прогресс-баром</li>
+                <li>📊 Расчёт скорости печати (WPM — слов в минуту)</li>
+                <li>🎯 Подсчёт точности ввода (процент правильных символов)</li>
+                <li>🎮 Удобный интерфейс с поддержкой клавиатуры</li>
+                <li>🔤 Подсветка правильных (зелёный) и ошибочных (красный) символов</li>
+            </ul>
+
+            <h2 id="levels">🧠 Уровни сложности</h2>
+            <table class="level-table">
+                <thead>
+                    <tr><th>Уровень</th><th>Описание</th><th>Примеры слов</th><th>Время</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Новичок</td><td>кот, дом, друг, мама, папа, сон, день, ночь, вода, еда</td><td>60 сек</td></tr>
+                    <tr><td>2</td><td>Средний</td><td>клавиатура, программа, компьютер, монитор, процессор, интернет, браузер, сервер, файл, папка</td><td>60 сек</td></tr>
+                    <tr><td>3</td><td>Профи</td><td>разработчик, алгоритм, архитектура, микросервис, контейнер, деплоймент, инфраструктура, автоматизация, тестирование, документация</td><td>45 сек</td></tr>
+                </tbody>
+            </table>
+
+            <h2>🖥️ Скриншоты</h2>
+            <div class="screenshot-gallery">
+                <figure>
+                    <img src="photos/first_screen.png" alt="Меню">
+                    <figcaption>Главное меню</figcaption>
+                </figure>
+                <figure>
+                    <img src="photos/middle_screen.png" alt="Игра">
+                    <figcaption>Процесс игры</figcaption>
+                </figure>
+                <figure>
+                    <img src="photos/last_screen.png" alt="Конец игры">
+                    <figcaption>Результаты</figcaption>
+                </figure>
+            </div>
+            <p><em>Примечание: замените плейсхолдеры на реальные скриншоты, поместив изображения в папку <code>photos/</code> и указав пути <code>photos/first_screen.png</code> и т.д.</em></p>
+
+            <h2>🎮 Как играть</h2>
+            <div class="keys">
+                <span class="key">↑ / ↓</span> — выбор уровня в меню
+                <span class="key">Enter</span> — старт / подтвердить слово
+                <span class="key">Backspace</span> — удалить символ
+                <span class="key">Esc</span> — выход в меню (во время игры)
+                <span class="key">R</span> — переиграть (на экране Game Over)
+            </div>
+            <p>Печатайте слово, которое видите на экране. Каждая буква подсвечивается зелёным, если она правильная, или красным — если ошиблись. Нажмите <strong>Enter</strong>, чтобы перейти к следующему слову. По истечении времени увидите вашу скорость (WPM) и точность.</p>
+
+            <h2 id="install">🛠 Установка и запуск</h2>
+            <p><strong>Требования:</strong> Python 3.7 или новее, библиотека Pygame.</p>
+            <ol>
+                <li>Склонируйте репозиторий или скачайте файл <code>main.py</code>:
+                    <pre><code>git clone https://github.com/ваш_логин/type-marathon.git
+cd type-marathon</code></pre>
+                </li>
+                <li>Установите Pygame:
+                    <pre><code>pip install pygame</code></pre>
+                </li>
+                <li>Запустите игру:
+                    <pre><code>python main.py</code></pre>
+                </li>
+            </ol>
+
+            <h2>📁 Структура проекта</h2>
+            <pre><code>type-marathon/
+├── main.py          # Полный код игры
+├── README.md        # Документация
+├── .gitignore       # Исключаем .idea/, __pycache__/
+└── photos/          # Папка для скриншотов (опционально)</code></pre>
+
+            <h2 id="code">🧠 Как это работает (пример кода)</h2>
+            <p>Основная логика: слова из уровней, посимвольное сравнение и подсчёт WPM.</p>
+            <pre><code>def get_wpm():
+    elapsed = max(time.time() - start_time, 1)
+    words_typed = correct_chars / 5
+    return round(words_typed * 60 / elapsed)
+
+def reset_game():
+    global current_word, input_text, start_time, correct_chars, total_chars
+    current_word = random.choice(level_data["words"])
+    input_text = ""
+    start_time = time.time()
+    correct_chars = 0
+    total_chars = 0</code></pre>
+            <p>Полный исходный код игры доступен в репозитории (файл <code>main.py</code>).</p>
+
+            <h2>📊 Метрики</h2>
+            <ul>
+                <li><strong>WPM (слов в минуту):</strong> (количество правильно набранных символов / 5) * 60 / прошедшие секунды.</li>
+                <li><strong>Точность:</strong> (правильные символы / общее число введённых символов) * 100%.</li>
+            </ul>
+
+            <h2>🔮 Планы по улучшению</h2>
+            <ul>
+                <li>Звуковые эффекты</li>
+                <li>Таблица рекордов (JSON)</li>
+                <li>Английский язык и переключение раскладки</li>
+                <li>Динамическое увеличение сложности</li>
+            </ul>
+
+            <hr>
+            <p><strong>Лицензия:</strong> MIT. Свободное использование, модификация и распространение.</p>
+            <p><strong>Автор:</strong> Савенков Алексей Александрович<br>
+            <strong>Дата релиза:</strong> 27.05.2026</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Тайп-марафон</h3>
+                    <p>Тренируй скорость печати с удовольствием</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Контакты</h4>
+                    <p><i class="fas fa-envelope"></i> typemarathon@example.com</p>
+                    <p><i class="fab fa-github"></i> <a href="#" style="color:#cbd5e1">github.com/your/type-marathon</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Тайп-марафон. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Мобильное меню
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        if (hamburger && navMenu) {
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                navMenu.classList.toggle("active");
+            });
+            document.querySelectorAll(".nav-menu a").forEach(n => n.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                navMenu.classList.remove("active");
+            }));
+        }
+    </script>
+</body>
+</html>
